@@ -83,14 +83,19 @@ pip install -r requirements.txt
 
 ### Usage
 ```cmd
-# Start monitoring with default settings
+# Start network monitoring with default settings (default mode)
 python windows.py
 
-# Custom configuration
+# Custom monitoring configuration
 python windows.py --threshold 7 --block-duration 600 --debug
 
 # Monitor specific network interface
 python windows.py --interface "Ethernet 2"
+
+# Analysis and dashboard modes (admin privileges required for dashboard)
+python windows.py --analyze                    # Analyze captured attack data
+python windows.py --dashboard                  # Real-time monitoring dashboard
+python windows.py --geolocate                  # Geographic attack analysis
 ```
 
 ### Advanced Windows Features
@@ -131,14 +136,19 @@ pip3 install -r requirements.txt
 
 ### Usage
 ```bash
-# Start monitoring with elevated privileges
+# Start network monitoring with elevated privileges (default mode)
 sudo python3 macos.py
 
-# Custom configuration for Mac servers
+# Custom monitoring configuration
 sudo python3 macos.py --threshold 4 --block-duration 450 --debug
 
 # Monitor specific network interface
 sudo python3 macos.py --interface en1
+
+# Analysis and dashboard modes (no sudo required for analysis)
+python3 macos.py --analyze                    # Analyze captured attack data
+sudo python3 macos.py --dashboard             # Real-time monitoring dashboard
+python3 macos.py --geolocate                  # Geographic attack analysis
 ```
 
 ### Advanced macOS Features
@@ -180,7 +190,7 @@ pip3 install -r requirements.txt
 
 ### Usage
 ```bash
-# Start monitoring with default settings
+# Start network monitoring with default settings (default mode)
 sudo python3 linux.py
 
 # High-security server configuration
@@ -188,6 +198,11 @@ sudo python3 linux.py --threshold 3 --block-duration 600 --debug
 
 # Disable fail2ban integration if not available
 sudo python3 linux.py --no-fail2ban
+
+# Analysis and dashboard modes (no sudo required for analysis)
+python3 linux.py --analyze                     # Analyze captured attack data
+sudo python3 linux.py --dashboard              # Real-time monitoring dashboard
+python3 linux.py --geolocate                   # Geographic attack analysis
 ```
 
 ### Advanced Linux Features
@@ -211,12 +226,22 @@ sudo python3 linux.py --threshold 3 --block-duration 300
 ### Universal Command Options
 All platforms support the same core command structure:
 
+#### Operation Modes
+| Mode | Description | Privileges Required | Example |
+|------|-------------|-------------------|---------|
+| `--monitor` | Start network monitoring (default) | Admin/sudo | `sudo python3 macos.py --monitor` |
+| `--analyze` | Analyze captured attack data | None | `python3 macos.py --analyze` |
+| `--dashboard` | Real-time monitoring dashboard | Admin/sudo | `sudo python3 macos.py --dashboard` |
+| `--geolocate` | Geographic attack analysis | None | `python3 macos.py --geolocate` |
+
+#### Monitoring Options
 | Option | Description | Default | Example |
 |--------|-------------|---------|---------|
 | `--interface` | Network interface to monitor | Auto-detect | `--interface eth0` |
 | `--threshold` | Suspicious attempts before blocking | 10 (8 Linux/macOS) | `--threshold 5` |
 | `--block-duration` | Auto-unblock time in seconds | 300 | `--block-duration 600` |
 | `--debug` | Enable verbose debug logging | False | `--debug` |
+| `--refresh` | Dashboard refresh interval (seconds) | 5 | `--refresh 3` |
 
 ### Platform-Specific Options
 | Platform | Option | Description | Example |
@@ -275,6 +300,55 @@ All platforms support the same core command structure:
     "platform_info": "Linux Ubuntu 22.04"
   }
 }
+```
+
+## ※ Integrated Analysis Features
+
+### 📊 Attack Analysis Mode
+Analyze captured attack data to identify patterns and generate threat intelligence:
+
+```bash
+# Comprehensive attack analysis
+python3 macos.py --analyze      # macOS
+python3 linux.py --analyze      # Linux  
+python windows.py --analyze     # Windows
+
+# Example output:
+# 🕒 Attack timing analysis with hourly breakdowns
+# 🌐 Top attacking IPs with reverse DNS lookup
+# 🎯 Most targeted services and ports
+# 🛡️ Platform-specific security status
+```
+
+### 📱 Real-Time Dashboard Mode
+Live monitoring dashboard with continuous updates:
+
+```bash
+# Real-time security dashboard
+sudo python3 macos.py --dashboard --refresh 3    # macOS
+sudo python3 linux.py --dashboard --refresh 3    # Linux
+python windows.py --dashboard --refresh 3        # Windows (run as Admin)
+
+# Features:
+# - Live attack feed with timestamps
+# - Top attackers and targeted services
+# - System resource monitoring
+# - Platform-specific firewall status
+```
+
+### 🌍 Geographic Analysis Mode
+Analyze the geographic distribution of attacks:
+
+```bash
+# Geographic attack analysis
+python3 macos.py --geolocate     # macOS
+python3 linux.py --geolocate     # Linux
+python windows.py --geolocate    # Windows
+
+# Provides:
+# - IP address analysis by location
+# - Attack frequency by geographic region
+# - Basic threat intelligence gathering
 ```
 
 ## Usage Examples
